@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 import json, re, requests, sqlite3, discord, time
+
 class Api():
     ''' Do the work against pubg.report api '''
     from bot.main import build_embed
@@ -13,7 +14,7 @@ class Api():
             if y['shard'] == "steam":
                 return y['id']
         return None
-                
+
     def getStream(self, i):
         ''' Get the json data we need from pubg.report '''
         if i.split('.')[0] != 'account':
@@ -50,7 +51,6 @@ class Api():
                     time.sleep(1)
                     self.build_embed(discorduser=discorduser, killer=killer, victim=victim, distance=distance, mmap=mmap, mode=mode, weapon=weapon, event=event, twitchID=twitchID, videoID=videoID, matchID=matchID, eventID=eventID, when=when, diff=diff)
         else:
-            
             return None
 
     def report_register(self, author, name):
@@ -82,4 +82,3 @@ class Api():
             return True
         c.close()
         return False
-

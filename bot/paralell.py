@@ -72,10 +72,4 @@ def main():
                     logging.info(str(r))
                     traceback.print_exc()
                     break
-            
-            run += timer   
-        
-        
-
-        
-        
+            run += timer

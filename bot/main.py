@@ -27,7 +27,7 @@ if os.path.exists('database.db') is False:
 
 def extload():
     #Load the neccecary assets before we do anything else.
-    print('Loading external assets..', end='') 
+    print('Loading external assets..', end='')
     a = requests.get('https://raw.githubusercontent.com/pubg/api-assets/master/dictionaries/telemetry/damageCauserName.json')
     weapons_list.update(json.loads(a.text))
     c = requests.get('https://raw.githubusercontent.com/pubg/api-assets/master/dictionaries/telemetry/mapName.json')
@@ -81,9 +81,9 @@ def getEvent(i):
 def build_embed(apiobj, discorduser=None, killer=None, victim=None, distance=None, mmap=None, mode=None, weapon=None, event=None, twitchID=None, videoID=None, matchID=None, eventID=None, when=None, diff=None, test=None):
     ''' Function to build embed data'''
     if getEvent(eventID):
-        return # stop execution if event has already been posted.    
+        return # stop execution if event has already been posted.
     logging.info('Update Found!')
-    # We need to name and add a few assets to the embed. 
+    # We need to name and add a few assets to the embed.
     DamageCauser = {
         "LogPlayerKill": 'killed' ,
         "LogPlayerDeath": 'killed',
@@ -151,7 +151,6 @@ def build_embed(apiobj, discorduser=None, killer=None, victim=None, distance=Non
         about = compute(victim=victim, matchid=matchID)
         if about is not False:
             embed.add_field(name='About {}'.format(victim), value=about, inline=False)
-            
     else:
         pass
         #embed.set_image(url=maptype[mapp])
@@ -167,7 +166,7 @@ def build_embed(apiobj, discorduser=None, killer=None, victim=None, distance=Non
     # say it
     say(embed=embed)
     # Bots arent allowed to embed videos (yet)
-    #say(text="https://player.twitch.tv/?video={}&autoplay=false&time={}&width=800&height=600".format(videoID, timecode)) 
+    #say(text="https://player.twitch.tv/?video={}&autoplay=false&time={}&width=800&height=600".format(videoID, timecode))
 
 def say(text=None, embed=None):
     from pubgbot import webhook_uri
@@ -181,11 +180,11 @@ class Pubgbot(discord.Client):
         ''' initialize bot and report plugin'''
         logging.info('Logged in as {}'.format(self.user))
         extload() # we'll load the external assets /before/ we start the new loop.
-        bot_username = '{}'.format(self.user) #Make username Global. 
+        bot_username = '{}'.format(self.user) #Make username Global.
         loop = client.loop
         from bot.paralell import main as runloop
         await loop.run_in_executor(None, runloop)
-        
+
     async def on_message(self, message):
         from bot.pubg import Api
         api = Api()
@@ -198,6 +197,8 @@ class Pubgbot(discord.Client):
             print('< {}> {}'.format(message.author, '*unable to decode textdata*'))
         if message.author != self.user:
             msg = message.content.split(' ')
+
+            ## TEST
             if msg[0] == '!test':
                 if len(msg) != 2:
                     await message.channel.send('Requires exactly one argument')
@@ -242,7 +243,7 @@ class Pubgbot(discord.Client):
                 elif register is True:
                     await message.channel.send('Added player "{}" to the tracking.'.format(msg[1]))
                     return False
-                
+
             ## UNREGISTER
             elif msg[0] == '!unregister':
                 if len(msg) != 2:
@@ -256,7 +257,5 @@ class Pubgbot(discord.Client):
                 elif unregister is False:
                     await message.channel.send('Could not remove {} from tracking, are you sure the user exists?'.format(msg[1]))
                     return
+
 client = Pubgbot(intents=discord.Intents.default())
-
-
-
