@@ -107,15 +107,15 @@ def build_embed(apiobj, discorduser=None, killer=None, victim=None, distance=Non
         "BlueZoned": "https://raw.githubusercontent.com/pubg/api-assets/master/Assets/Icons/Killfeed/Bluezone.png",
         "BlackZoned": "https://raw.githubusercontent.com/pubg/api-assets/master/Assets/Icons/Killfeed/Blackzone.png"
     }
-
-    maptype = {
-        "Erangel (Remastered)": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Erangel.png",
-        "Erangel": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Erangel.png",
-        "Miramar": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Miramar.png",
-        "Sanhok": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Sanhok.png",
-        "Vikendi": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Vikendi.png",
-        "Karakin": "https://gamerjournalist.com/wp-content/uploads/2020/01/PUBG-Karakin-Map-1024x555.jpg" # Update this when api assets are updated.
-    }
+#
+#    maptype = {
+#        "Erangel (Remastered)": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Erangel.png",
+#        "Erangel": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Erangel.png",
+#        "Miramar": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Miramar.png",
+#        "Sanhok": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Sanhok.png",
+#        "Vikendi": "https://github.com/pubg/api-assets/raw/master/Assets/MapSelection/Vikendi.png",
+#        "Karakin": "https://gamerjournalist.com/wp-content/uploads/2020/01/PUBG-Karakin-Map-1024x555.jpg" # Update this when api assets are updated.
+#    }
 
     timestamp = int(time.time())
     weapon = 'N/A' if weapon=='' else weapons_list[weapon]
