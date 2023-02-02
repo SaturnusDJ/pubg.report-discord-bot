@@ -1,6 +1,7 @@
-# pubg.report discord bot
+# PUBG.report Discord Bot
 
-  
+This is forked from https://github.com/kragebein/pubg.reportbot. I applied fixes found online and provided by contributors in issues and comments.
+Besides, I will try to do some modifications to improve on the great work done by Kragebein.
 
 A bot that will announce your kill/you being killed in pubg to your discord channel with video from your enemies point of view via their Twitchstream.
 
