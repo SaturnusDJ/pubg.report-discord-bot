@@ -136,7 +136,7 @@ def build_embed(apiobj, discorduser=None, killer=None, victim=None, distance=Non
     timecode = "{}h{}m{}s".format(h,m,s)
     # Credit to whoever made this
 
-    embed = discord.Embed(title='{} just {} {}!'.format(killer, event, victim),url="https://www.twitch.tv/videos/{}?t={}".format(videoID,timecode), timestamp=datetime.datetime.utcfromtimestamp(timestamp))
+    embed = discord.Embed(title='{} {} {}!'.format(killer, event, victim),url="https://www.twitch.tv/videos/{}?t={}".format(videoID,timecode), timestamp=datetime.datetime.utcfromtimestamp(timestamp))
     embed.set_thumbnail(url=imagetype[event])
     embed.set_author(name=discorduser)
     embed.set_footer(text="pubg.reportbot", icon_url="https://avatars0.githubusercontent.com/u/19599766?s=120&v=4")
@@ -200,7 +200,7 @@ class Pubgbot(discord.Client):
             msg = message.content.split(' ')
             if msg[0] == '!test':
                 if len(msg) != 2:
-                    await message.channel.send('Requires Exactly 1 argument')
+                    await message.channel.send('Requires exactly one argument')
                     return
                 
                 from bot.pubg import Api
@@ -216,28 +216,28 @@ class Pubgbot(discord.Client):
                 try: 
                     report_id = api.getId(msg[1])
                 except:
-                    await message.channel.send('Couldnt find that user.')
+                    await message.channel.send('Could not find that user.')
                     return
                 await message.channel.send('pubg.report id: {}'.format(report_id))
 
             ## REGISTER
             elif msg[0] == '!register':
                 if len(msg) != 2:
-                    await message.channel.send('This command requires exactly 1 argument!\n!register <pubgname> (without <>)')
+                    await message.channel.send('This command requires exactly one argument!\n!register <pubgname> (without <>)')
                     return
                 try:
                     report_id = api.getId(msg[1])
                     print(report_id)
                     if report_id is None:
-                        await message.channel.send('Sorry. Couldnt find match for that playername')
+                        await message.channel.send('Sorry. Could not find match for that playername')
                         return False
                 except Exception as r: 
-                    await message.channel.send('Sorry, couldnt find any players with that name.')
+                    await message.channel.send('Sorry, could not find any players with that name.')
                     logging.info(r)
                     return False
                 register = api.report_register(message.author, report_id)
                 if register is False:
-                    await message.channel.send('Sorry, couldnt track this player. Already registered?')
+                    await message.channel.send('Sorry, could not track this player. Already registered?')
                     return False
                 elif register is True:
                     await message.channel.send('Added player "{}" to the tracking.'.format(msg[1]))
@@ -246,7 +246,7 @@ class Pubgbot(discord.Client):
             ## UNREGISTER
             elif msg[0] == '!unregister':
                 if len(msg) != 2:
-                    await message.channel.send('This command requires exactly 1 argument!\n!unregister <pubgname> (without <>)')
+                    await message.channel.send('This command requires exactly one argument!\n!unregister <pubgname> (without <>)')
                     return
                 report_id = api.getId(msg[1])
                 unregister = api.report_unregister(message.author, report_id)
@@ -254,7 +254,7 @@ class Pubgbot(discord.Client):
                     await message.channel.send('Removed {} from tracking.'.format(msg[1]))
                     return
                 elif unregister is False:
-                    await message.channel.send('Couldnt remove {} from tracking, are you sure the user exists?'.format(msg[1]))
+                    await message.channel.send('Could not remove {} from tracking, are you sure the user exists?'.format(msg[1]))
                     return
 client = Pubgbot(intents=discord.Intents.default())
 
