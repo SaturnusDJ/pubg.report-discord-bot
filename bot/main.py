@@ -27,12 +27,12 @@ if os.path.exists('database.db') is False:
 
 def extload():
     #Load the neccecary assets before we do anything else.
-    print('Loading external assets..', end='')
+    print('Loading external assets..')
     a = requests.get('https://raw.githubusercontent.com/pubg/api-assets/master/dictionaries/telemetry/damageCauserName.json')
     weapons_list.update(json.loads(a.text))
     c = requests.get('https://raw.githubusercontent.com/pubg/api-assets/master/dictionaries/telemetry/mapName.json')
     map_list.update(json.loads(c.text))
-    print('Loaded')
+    print('Loaded.')
 
 def getUser(i):
     '''Find the discord username of whoever owns this id'''

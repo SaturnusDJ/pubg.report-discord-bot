@@ -42,10 +42,11 @@ def main():
     now = int(time.time())
     api = Api()
     run = now - 10
-    print('Bot is now running.')
+    print('PUBG.report Discord Bot is now running.')
     print('')
-    print('# Clients have to use !register command to register themselves.')
-    print('# !unregister to unregister')
+    print('# To use the program, clients have to send a direct message to the bot with a command:')
+    print('# !register to link the Discord user account to a PUBG nickname. Reports for this PUBG nickname will be posted.')
+    print('# !unregister to break the link. No more reports will be posted.')
     print('# The command !test <pugbname> is also available to see if\n  the bot has successfully located them on pubg.report')
     print('\n')
     while True:
