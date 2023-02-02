@@ -45,26 +45,26 @@ def getUser(i):
     if len(result) > 0:
         return result[0]
     return False
-
-def checkforupdate():
-    version = '1.2'
-    def update(update):
-        newversion = update['version']
-        if float(newversion) > float(version):
-            print('\n\n\n{} v{}\nNew version available: v{}\nGet it here: https://github.com/kragebein/pubg.reportbot\n\n\n\n\n'.format(name, version, newversion))
-        else:
-            print(name + ' v' + version)
-    try:
-        f = requests.get('https://raw.githubusercontent.com/kragebein/pubg.reportbot/master/version.txt')
-        upt = f.json()
-    except:
-        pass
-    try:
-        update(upt)
-    except:
-        print(name + ' v' + version)
-
-checkforupdate()
+#
+#def checkforupdate():
+#    version = '1.2'
+#    def update(update):
+#        newversion = update['version']
+#        if float(newversion) > float(version):
+#            print('\n\n\n{} v{}\nNew version available: v{}\nGet it here: https://github.com/kragebein/pubg.reportbot\n\n\n\n\n'.format(name, version, newversion))
+#        else:
+#            print(name + ' v' + version)
+#    try:
+#        f = requests.get('https://raw.githubusercontent.com/kragebein/pubg.reportbot/master/version.txt')
+#        upt = f.json()
+#    except:
+#        pass
+#    try:
+#        update(upt)
+#    except:
+#        print(name + ' v' + version)
+#
+#checkforupdate()
 
 def getEvent(i):
     '''Check if this is already processed.'''
