@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 # -*- coding: UTF-8 -*-
 import discord, logging, json, requests, datetime, sqlite3, time, asyncio, os
-from discord import Webhook, RequestsWebhookAdapter
+from discord import Webhook, SyncWebhook
 from calendar import timegm
 name = 'pubg.report bot'
 bot_username = ''
@@ -171,8 +171,7 @@ def build_embed(apiobj, discorduser=None, killer=None, victim=None, distance=Non
 
 def say(text=None, embed=None):
     from pubgbot import webhook_uri
-    uri = webhook_uri.split('/')
-    webhook = Webhook.partial(uri[5], uri[6], adapter=RequestsWebhookAdapter())
+    webhook = SyncWebhook.from_url(webhook_uri)
     if text is None:
         text = ''
     webhook.send(text, embed=embed, username=bot_username)
@@ -257,7 +256,7 @@ class Pubgbot(discord.Client):
                 elif unregister is False:
                     await message.channel.send('Couldnt remove {} from tracking, are you sure the user exists?'.format(msg[1]))
                     return
-client = Pubgbot()
+client = Pubgbot(intents=discord.Intents.default())
 
 
 
