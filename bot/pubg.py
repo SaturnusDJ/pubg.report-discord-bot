@@ -29,7 +29,7 @@ class Api():
     def event(self, i, discorduser):
         '''Processes the data we got from pubg.report '''
         k = self.getStream(i)
-        if k != None:     
+        if k != None:
             k = json.loads(k)
             for i in iter(k):
                 x = k[i]
