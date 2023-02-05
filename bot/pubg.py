@@ -57,7 +57,7 @@ class Api():
         ''' Handles the registration '''
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        rep_sql_reg = 'SELECT pubgname from players WHERE discordname ="{}"'.format(author)
+        rep_sql_reg = 'SELECT pubg_id from players WHERE discord_username ="{}"'.format(author)
         result = c.execute(rep_sql_reg)
         exist = result.fetchall()
         if len(exist) == 0:
@@ -72,11 +72,11 @@ class Api():
         ''' handles the de-registration '''
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        rep_sql_reg = 'SELECT pubgname from players WHERE pubgname ="{}"'.format(name)
+        rep_sql_reg = 'SELECT pubg_id from players WHERE pubg_id ="{}"'.format(name)
         result = c.execute(rep_sql_reg)
         exist = result.fetchall()
         if len(exist) != 0:
-            c.execute('DELETE from players WHERE pubgname = "{}"'.format(name))
+            c.execute('DELETE from players WHERE pubg_id = "{}"'.format(name))
             conn.commit()
             c.close()
             return True

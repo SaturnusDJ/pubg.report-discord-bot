@@ -5,7 +5,7 @@ from bot.pubg import Api
 from pubgbot import check_rate
 
 def getUser(i): 
-        query = 'SELECT discordname FROM players WHERE pubgname = "{}"'.format(i)
+        query = 'SELECT discord_username FROM players WHERE pubg_id = "{}"'.format(i)
         conn = sqlite3.connect('database.db')
         sql = conn.cursor()
         data = sql.execute(query)
@@ -18,7 +18,7 @@ timer = check_rate * 60
 accountlist = [] #TODO: make some statistics.
 
 def sql():
-    query = 'SELECT pubgname FROM players'
+    query = 'SELECT pubg_id FROM players'
     conn = sqlite3.connect('database.db')
     sql = conn.cursor()
     data = sql.execute(query)

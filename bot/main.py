@@ -16,7 +16,7 @@ if os.path.exists('database.db') is False:
     x = sqlite3.connect('database.db')
     c = x.cursor()
     queries = [
-    'CREATE TABLE players (discordname TEXT, pubgname TEXT);',
+    'CREATE TABLE players (discord_username TEXT, pubg_id TEXT);',
     'CREATE TABLE matches (eventid TEXT);'
     ]
     for i in queries:
@@ -38,7 +38,7 @@ def getUser(i):
     '''Find the discord username of whoever owns this id'''
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    query = 'SELECT discordname FROM players WHERE pubgname = "{}"'.format(i)
+    query = 'SELECT discord_username FROM players WHERE pubg_id = "{}"'.format(i)
     result = c.execute(query)
     result = result.fetchall()
     conn.close()
