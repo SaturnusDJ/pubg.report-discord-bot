@@ -53,32 +53,37 @@ class Api():
         else:
             return None
 
-    def report_register(self, author, name):
-        ''' Handles the registration '''
+    def report_register(self, author, name, nick):
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        rep_sql_reg = 'SELECT pubg_id from players WHERE discord_username ="{}"'.format(author)
+        rep_sql_reg = 'SELECT pubg_nickname from players WHERE discord_username ="{}"'.format(author) #Check if there already is a record for this Discord user
         result = c.execute(rep_sql_reg)
         exist = result.fetchall()
         if len(exist) == 0:
-            c.execute('INSERT INTO players VALUES("{}","{}")'.format(author, name))
-            conn.commit()
+            rep_sql_reg = 'SELECT pubg_id from players WHERE pubg_id ="{}"'.format(name) #Check if there already is a record for this Nickname
+            result = c.execute(rep_sql_reg)
+            exist = result.fetchall()
+            if len(exist) == 0:
+                c.execute('INSERT INTO players VALUES("{}","{}","{}","{}")'.format(author.id, author, name, nick))
+                conn.commit()
+                c.close()
+                return (name)
             c.close()
-            return True
+            return (author)
         c.close()
-        return False
+        return (exist[0])
 
-    def report_unregister(self, author, name):
-        ''' handles the de-registration '''
+    def report_unregister(self, author):
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        rep_sql_reg = 'SELECT pubg_id from players WHERE pubg_id ="{}"'.format(name)
+        rep_sql_reg = 'SELECT pubg_nickname from players WHERE discord_username ="{}"'.format(author)
         result = c.execute(rep_sql_reg)
         exist = result.fetchall()
         if len(exist) != 0:
-            c.execute('DELETE from players WHERE pubg_id = "{}"'.format(name))
+            c.execute('DELETE from players WHERE discord_username = "{}"'.format(author))
             conn.commit()
             c.close()
-            return True
+            return (exist[0])
         c.close()
         return False
+

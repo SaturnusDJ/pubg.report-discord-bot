@@ -16,7 +16,7 @@ if os.path.exists('database.db') is False:
     x = sqlite3.connect('database.db')
     c = x.cursor()
     queries = [
-    'CREATE TABLE players (discord_username TEXT, pubg_id TEXT);',
+    'CREATE TABLE players (discord_id INT, discord_username TEXT, pubg_id TEXT, pubg_nickname TEXT);',
     'CREATE TABLE matches (eventid TEXT);'
     ]
     for i in queries:
@@ -224,38 +224,45 @@ class Pubgbot(discord.Client):
             ## REGISTER
             elif msg[0] == '!register':
                 if len(msg) != 2:
-                    await message.channel.send('This command requires exactly one argument!\n!register <pubgname> (without <>)')
+                    await message.channel.send('This command requires one argument.\n!register <pubgname> (without <>)')
                     return
                 try:
-                    report_id = api.getId(msg[1])
-                    print(report_id)
-                    if report_id is None:
-                        await message.channel.send('Sorry. Could not find match for that playername')
+                    pubg_id = api.getId(msg[1])
+                    if pubg_id is None:
+                        await message.channel.send('Did not find "{}" in PUBG.report database'.format(msg[1]))
                         return False
-                except Exception as r: 
-                    await message.channel.send('Sorry, could not find any players with that name.')
+                except Exception as r:
+                    await message.channel.send('Sorry, an error occured. Please contact the server owner.')
                     logging.info(r)
                     return False
-                register = api.report_register(message.author, report_id)
-                if register is False:
-                    await message.channel.send('Sorry, could not track this player. Already registered?')
+                register = api.report_register(message.author, pubg_id, msg[1])
+                if register == pubg_id:
+                    await message.channel.send('Success! Linked Discord user "{}" to PUBG player "{}".'.format(message.author, msg[1]))
                     return False
-                elif register is True:
-                    await message.channel.send('Added player "{}" to the tracking.'.format(msg[1]))
+                elif register == message.author:
+                    await message.channel.send('Could not register. PUBG nickname "{}" is linked to another Discord username.'.format(msg[1]))
+                    return False
+                elif register[0] == msg[1]:
+                    await message.channel.send('This registration already exists in database')
+                    return False
+                elif register:
+                    await message.channel.send('Discord username "{}" is already linked to a PUBG player with nickname "{}"'.format(message.author, register[0]))
+                    return False
+                else:
+                    await message.channel.send('Sorry, an error occured. Please contact the server owner.')
                     return False
 
             ## UNREGISTER
             elif msg[0] == '!unregister':
-                if len(msg) != 2:
-                    await message.channel.send('This command requires exactly one argument!\n!unregister <pubgname> (without <>)')
+                if len(msg) != 1:
+                    await message.channel.send('This command has no arguments.')
                     return
-                report_id = api.getId(msg[1])
-                unregister = api.report_unregister(message.author, report_id)
-                if unregister is True:
-                    await message.channel.send('Removed {} from tracking.'.format(msg[1]))
+                unregister = api.report_unregister(message.author)
+                if unregister:
+                    await message.channel.send('Unlinked Discord username "{}" from PUBG player known as "{}" during registration.'.format(message.author, unregister[0]))
                     return
                 elif unregister is False:
-                    await message.channel.send('Could not remove {} from tracking, are you sure the user exists?'.format(msg[1]))
+                    await message.channel.send('There is no PUBG player linked to Discord username "{}".'.format(message.author))
                     return
 
 client = Pubgbot(intents=discord.Intents.default())
