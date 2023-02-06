@@ -11,7 +11,7 @@ class Api():
         z = x.text
         y = json.loads(z)
         for y in y:
-            if y['shard'] == "steam":
+            if y['shard'] == "steam" and y['nickname'] == i:
                 return y['id']
         return None
 
