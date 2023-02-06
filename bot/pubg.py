@@ -12,9 +12,7 @@ class Api():
         y = json.loads(z)
         for y in y:
             if y['shard'] == "steam":
-                if y['nickname'] == i:
-                    return y['id']
-            return None
+                return y['id']
         return None
 
     def getStream(self, i):
